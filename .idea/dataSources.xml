@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="qqbot@10.144.70.132" uuid="49718ba3-df38-4f0a-b834-b028057a5b08">
+    <data-source source="LOCAL" name="qqbot@192.168.50.45" uuid="49718ba3-df38-4f0a-b834-b028057a5b08">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://10.144.70.132:3306/qqbot</jdbc-url>
+      <jdbc-url>jdbc:mysql://192.168.50.45:3306/qqbot</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
