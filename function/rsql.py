@@ -2,12 +2,13 @@ import pymysql as pymysql
 
 
 def run_sql(sql):
-    db = pymysql.connect(host="10.144.70.132", user="qqbot",
-                         password="CPmL7rTj5a8iBxm8", database="qqbot")
+    db = pymysql.connect(host="10.144.118.78", user="qqbot",
+                         password="baETzJf5tTy3SfR8", database="qqbot")
     cursor = db.cursor()
     try:
         cursor.execute(sql)
         db.commit()
+        print(sql)
         results = cursor.fetchall()
         value = []
         if len(results) == 1:
@@ -24,5 +25,3 @@ def run_sql(sql):
         print(e)
     db.close()
 
-
-print(run_sql("select * from keywords_reply where keywords = '早'"))

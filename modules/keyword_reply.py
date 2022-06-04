@@ -36,3 +36,5 @@ async def keywords_reply(app: Ariadne, group: Group, message: MessageChain, memb
                 else:  # 不相等，模糊匹配
                     await app.sendGroupMessage(group, re_chain)
                     break
+
+

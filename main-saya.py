@@ -13,7 +13,7 @@ from graia.scheduler.saya import GraiaSchedulerBehaviour
 app = Ariadne(
     MiraiSession(
         # 以下3行请按照你的 MAH 配置来填写
-        host="ws://10.144.17.0:8080",  # 同 MAH 的 port
+        host="http://10.144.17.0:8080",  # 同 MAH 的 port
         verify_key="wingxiaismydad",  # 同 MAH 配置的 verifyKey
         account=3965749,  # 机器人 QQ 账号
     ),
@@ -24,7 +24,9 @@ saya.install_behaviours(
     app.create(BroadcastBehaviour),
     app.create(GraiaSchedulerBehaviour),
 )
-
+global skyGroups
+global forbiddingWords
+global KeyWordsList
 with saya.module_context():
     for module_info in pkgutil.iter_modules(["modules"]):
         if module_info.name.startswith("_"):
