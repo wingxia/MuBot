@@ -24,4 +24,3 @@ def run_sql(sql):
     except Exception as e:
         print(e)
     db.close()
-
