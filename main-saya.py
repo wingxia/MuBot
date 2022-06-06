@@ -24,9 +24,7 @@ saya.install_behaviours(
     app.create(BroadcastBehaviour),
     app.create(GraiaSchedulerBehaviour),
 )
-global skyGroups
-global forbiddingWords
-global KeyWordsList
+
 with saya.module_context():
     for module_info in pkgutil.iter_modules(["modules"]):
         if module_info.name.startswith("_"):
