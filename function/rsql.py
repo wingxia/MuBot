@@ -24,3 +24,5 @@ def run_sql(sql):
     except Exception as e:
         print(e)
     db.close()
+if run_sql(f"select * from special_title where qqid = 123 and groupid = 123123") == []:
+    print(1)
