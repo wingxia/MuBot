@@ -30,7 +30,7 @@ async def deal_parter(app: Ariadne, group: Group, message: MessageChain, member:
                 if fuzzyDealKeyword in message.asDisplay():
                     await app.muteAll(group)
                     await app.sendGroupMessage(group,
-                                               MessageChain.create(Plain(f"啊~哈哈哈，鸡汤来咯~，请认真看完要求再报价(20秒后解除全体禁言)")))
+                                               MessageChain.create(Atall(),Plain(f"啊~哈哈哈，鸡汤来咯~，请认真看完要求再报价(20秒后解除全体禁言)")))
                     await asyncio.sleep(20)
                     await app.unmuteAll(group)
                     break
