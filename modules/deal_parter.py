@@ -25,6 +25,9 @@ async def deal_parter(app: Ariadne, group: Group, message: MessageChain, member:
                 await app.muteAll(group)
             elif message.asDisplay() in ['恭喜', '解全体禁言', '解除全体禁言', '解禁', '开始报价']:
                 await app.unmuteAll(group)
+            elif message.asDisplay() == '开始报价':
+                await app.unmuteAll(group)
+                await app.sendGroupMessage(group,MessageChain.create(Atall()))
 
             for fuzzyDealKeyword in ['底价：', '底价:', '🈲压价🈲闲聊🈲重复报价']:
                 if fuzzyDealKeyword in message.asDisplay():
