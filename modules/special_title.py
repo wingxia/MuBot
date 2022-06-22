@@ -23,12 +23,12 @@ async def special_title(app: Ariadne, group: Group, message: MessageChain, membe
     if len(special_content) <= 6:
         if not run_sql(f"select * from special_title where qqid = {member.id} and groupid = {group.id}"):
             run_sql(
-                f"insert into special_title(qqid,specialtitle,groupid) values ({member.id},{special_content},{group.id})")
+                f"insert into special_title(qqid,specialtitle,groupid) values ({member.id},'{special_content}',{group.id})")
             await app.sendGroupMessage(group,
                                        message.create(At(member), f"你在群({group.id})的头衔({special_content})已成功申请请耐心等候~"))
         else:
             run_sql(
-                f"update special_title set specialtitle = {special_content} where qqid = {member.id} and groupid = {group.id}")
+                f"update special_title set specialtitle = '{special_content}' where qqid = {member.id} and groupid = {group.id}")
             await app.sendGroupMessage(group,
                                        message.create(At(member),
                                                       f"已在群({group.id})存在头衔申请，已将头衔内容覆盖为({special_content})"))
