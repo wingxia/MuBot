@@ -3,7 +3,7 @@ from graia.ariadne.event.message import FriendMessage, GroupMessage
 from graia.ariadne.message.chain import MessageChain
 from graia.ariadne.message.element import Image, Plain
 from graia.ariadne.message.parser.base import MatchTemplate
-from graia.ariadne.model import Friend, Member, Group
+from graia.ariadne.model import Friend, Member, Group, MemberPerm
 from graia.saya import Channel
 from graia.saya.builtins.broadcast import ListenerSchema
 from function.small_tool import get_img_id
@@ -30,10 +30,14 @@ async def send_img_id(app: Ariadne, message: MessageChain, friend: Friend):  # �
     )
 )
 async def send_img_id(app: Ariadne, message: MessageChain, member: Member, group: Group):  # 记录图片含义
-    if member.id in [1845764432] and group.id == 836217084:
+    if group.id == 829597531 or member.permission != MemberPerm.Member:
         img_id = get_img_id(message)
-        message_str = str(message).replace(" ", "")
-        run_sql(f"insert into image(imgId,note) values ('{img_id}','{message_str[4:-4]}')")
-        sql_em = run_sql(f"select * from image where imgId='{img_id}'")
-        if sql_em:
-            await app.send_group_message(group, MessageChain.create(Plain(f"设置成功!\n记录值为{sql_em}")))
+        message_str = str(message).replace(" ", "").replace("\n", "")
+        if not run_sql(f"select * from image where imgId='{img_id}'"):
+            run_sql(f"insert into image(imgId,note) values ('{img_id}','{message_str[4:-4]}')")
+            sql_em = run_sql(f"select * from image where imgId='{img_id}'")
+            if sql_em:
+                await app.send_group_message(group, MessageChain.create(Plain(f"设置成功!\n记录值为{sql_em}")))
+        else:
+            img_rec = run_sql(f"select * from image where imgId='{img_id}'")
+            await app.send_group_message(group, MessageChain.create(Plain(f"记录已经存在！\n{img_rec}")))
