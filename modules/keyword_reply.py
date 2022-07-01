@@ -28,13 +28,13 @@ async def keywords_reply(app: Ariadne, group: Group, message: MessageChain, memb
                 exec("re_chain.append(" + reply_c[i] + ")")
             print(re_chain)
             if reply_c[1] == group.id or reply_c[1] == 0:  # 在作用群内
-                if message.asDisplay() == word:  # 消息等于关键词，直接发送
-                    await app.sendGroupMessage(group, re_chain)
+                if message.display == word:  # 消息等于关键词，直接发送
+                    await app.send_group_message(group, re_chain)
                     break
                 elif reply_c[2]:  # 不相等且精准匹配
                     break
                 else:  # 不相等，模糊匹配
-                    await app.sendGroupMessage(group, re_chain)
+                    await app.send_group_message(group, re_chain)
                     break
 
 
