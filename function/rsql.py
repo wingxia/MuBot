@@ -6,9 +6,9 @@ def run_sql(sql):
                          password="baETzJf5tTy3SfR8", database="qqbot")
     cursor = db.cursor()
     try:
+        print(sql)
         cursor.execute(sql)
         db.commit()
-        print(sql)
         results = cursor.fetchall()
         value = []
         if len(results) == 1:
@@ -24,5 +24,4 @@ def run_sql(sql):
     except Exception as e:
         print(e)
     db.close()
-if run_sql(f"select * from special_title where qqid = 123 and groupid = 123123") == []:
-    print(1)
+

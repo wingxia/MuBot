@@ -1,13 +1,17 @@
+from typing import Union
+
 from graia.ariadne.app import Ariadne
 from graia.ariadne.event.message import FriendMessage, GroupMessage
 from graia.ariadne.message.chain import MessageChain
 from graia.ariadne.message.element import Image, Plain
 from graia.ariadne.message.parser.base import MatchTemplate
+from graia.ariadne.message.parser.twilight import FullMatch, Twilight
 from graia.ariadne.model import Friend, Member, Group, MemberPerm
 from graia.saya import Channel
 from graia.saya.builtins.broadcast import ListenerSchema
-from function.small_tool import get_img_id
+
 from function.rsql import run_sql
+from function.small_tool import get_img_id, fresh_cache
 
 channel = Channel.current()
 
@@ -41,3 +45,16 @@ async def send_img_id(app: Ariadne, message: MessageChain, member: Member, group
         else:
             img_rec = run_sql(f"select * from image where imgId='{img_id}'")
             await app.send_group_message(group, MessageChain(Plain(f"记录已经存在！\n{img_rec}")))
+
+
+@channel.use(ListenerSchema(listening_events=[GroupMessage, FriendMessage],
+                            inline_dispatchers=[
+                                Twilight(FullMatch("刷新缓存"), )]
+                            ))
+async def hello(app: Ariadne, target: Union[GroupMessage, FriendMessage]):
+    try:
+        fresh_cache()
+    except Exception as e:
+        await app.send_message(target, MessageChain(f'发生异常{e}'))
+    else:
+        await app.send_message(target, MessageChain(f'缓存已刷新'))
