@@ -34,4 +34,4 @@ async def special_title(app: Ariadne, group: Group, message: MessageChain, membe
                                          message.create(At(member),
                                                         f"已在群({group.id})存在头衔申请，已将头衔内容覆盖为({special_content})"))
     else:
-        await app.send_group_message(group, MessageChain.create(At(member), "头衔内容太长啦，请不要超过6个字符哦~"))
+        await app.send_group_message(group, MessageChain(At(member), "头衔内容太长啦，请不要超过6个字符哦~"))

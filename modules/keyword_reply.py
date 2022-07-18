@@ -6,11 +6,11 @@ from graia.ariadne.message.element import At, Image, Plain
 from graia.ariadne.model import Group, Member
 from graia.saya import Channel
 from graia.saya.builtins.broadcast import ListenerSchema
-
+from function.GlobalVariable import globalVariables as Gvb
 channel = Channel.current()
 
-KeyWordsList = run_sql("select keywords from keywords_reply")
-MessageChain.create(At(666), Image(), Plain("wer"))  # 别再把我的导入优化掉了，我要用！！！
+Gvb.KeyWordsList = run_sql("select keywords from keywords_reply")
+MessageChain(At(666), Image(), Plain("wer"))  # 别再把我的导入优化掉了，我要用！！！
 
 
 @channel.use(
@@ -19,10 +19,10 @@ MessageChain.create(At(666), Image(), Plain("wer"))  # 别再把我的导入优�
     )
 )
 async def keywords_reply(app: Ariadne, group: Group, message: MessageChain, member: Member):
-    for word in KeyWordsList:  # 遍历每个关键词
+    for word in Gvb.KeyWordsList:  # 遍历每个关键词
         if word in message:  # 关键词命中消息
             reply_c = run_sql(f"select * from keywords_reply where keywords = '{word}'")  # 获取关键词回复配置
-            re_chain = MessageChain.create(reply_c[3])
+            re_chain = MessageChain(reply_c[3])
             print(reply_c)
             for i in range(4, len(reply_c)):
                 exec("re_chain.append(" + reply_c[i] + ")")

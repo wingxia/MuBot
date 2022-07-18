@@ -20,7 +20,7 @@ channel = Channel.current()
 )
 async def send_img_id(app: Ariadne, message: MessageChain, friend: Friend):  # 返回图片id
     img_id = get_img_id(message)
-    await app.send_friend_message(friend, MessageChain.create(Plain(img_id)))
+    await app.send_friend_message(friend, MessageChain(Plain(img_id)))
 
 
 @channel.use(
@@ -37,7 +37,7 @@ async def send_img_id(app: Ariadne, message: MessageChain, member: Member, group
             run_sql(f"insert into image(imgId,note) values ('{img_id}','{message_str[4:-4]}')")
             sql_em = run_sql(f"select * from image where imgId='{img_id}'")
             if sql_em:
-                await app.send_group_message(group, MessageChain.create(Plain(f"设置成功!\n记录值为{sql_em}")))
+                await app.send_group_message(group, MessageChain(Plain(f"设置成功!\n记录值为{sql_em}")))
         else:
             img_rec = run_sql(f"select * from image where imgId='{img_id}'")
-            await app.send_group_message(group, MessageChain.create(Plain(f"记录已经存在！\n{img_rec}")))
+            await app.send_group_message(group, MessageChain(Plain(f"记录已经存在！\n{img_rec}")))
