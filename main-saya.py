@@ -20,8 +20,8 @@ app = Ariadne(
         "wingxiaismydad",  # 填入 verifyKey
         # 以下两行是你的 mirai-api-http 地址中的地址与端口
         # 默认为 "http://localhost:8080" 如果你没有改动可以省略这两行
-        HttpClientConfig(host="http://10.144.17.0:8080"),
-        WebsocketClientConfig(host="http://10.144.17.0:8080"),
+        HttpClientConfig(host="http://10.144.17.0:2002"),
+        WebsocketClientConfig(host="http://10.144.17.0:2002"),
     ),
 )
 saya = app.create(Saya)

@@ -59,7 +59,7 @@ async def add_group_forbidden_word(app: Ariadne, group: Group, message: MessageC
             else:
                 await app.send_group_message(group, MessageChain(f"该违禁词已存在"))
     else:
-        await app.send_group_message(group,MessageChain("权限不足：需要管理员权限。"))
+        await app.send_group_message(group, MessageChain("权限不足：需要管理员权限。"))
 
 
 @channel.use(
@@ -82,4 +82,4 @@ async def add_globe_forbidden_word(app: Ariadne, group: Group, message: MessageC
             else:
                 await app.send_group_message(group, MessageChain(f"全局该违禁词已存在"))
     else:
-        await app.send_group_message(group,MessageChain("权限不足：全局配置需要超管权限，你卡BUG呢。"))
+        await app.send_group_message(group, MessageChain("权限不足：全局配置需要超管权限，你卡BUG呢。"))

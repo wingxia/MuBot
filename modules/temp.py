@@ -1,14 +1,8 @@
-from typing import Union
+list1 = []
+for i in range(1, 4):
+    list1.append(i)
 
-from graia.ariadne.app import Ariadne
-from graia.ariadne.event.message import GroupMessage, FriendMessage
-from graia.ariadne.message.chain import MessageChain
-from graia.ariadne.message.parser.twilight import Twilight, FullMatch
+list1.append("sdf")
 
-from graia.saya.builtins.broadcast import ListenerSchema
-
-from function.small_tool import fresh_cache
-from function.GlobalVariable import globalVariables as Gvb
-
-fresh_cache()
-print(Gvb.AdminList)
+str_list = str(list1)
+print(str_list.replace('[','').replace("'sdf'","sdf"))
