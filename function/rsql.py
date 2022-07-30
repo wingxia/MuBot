@@ -2,11 +2,10 @@ import pymysql as pymysql
 
 
 def run_sql(sql):
-    db = pymysql.connect(host="10.144.118.78", user="qqbot",
+    db = pymysql.connect(host="182.61.2.44",port=2306, user="qqbot",
                          password="baETzJf5tTy3SfR8", database="qqbot")
     cursor = db.cursor()
     try:
-        print(sql)
         cursor.execute(sql)
         db.commit()
         results = cursor.fetchall()
@@ -24,4 +23,3 @@ def run_sql(sql):
     except Exception as e:
         print(e)
     db.close()
-
