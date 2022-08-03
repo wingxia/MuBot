@@ -6,6 +6,7 @@ def run_sql(sql):
                          password="baETzJf5tTy3SfR8", database="qqbot")
     cursor = db.cursor()
     try:
+        print(sql)
         cursor.execute(sql)
         db.commit()
         results = cursor.fetchall()

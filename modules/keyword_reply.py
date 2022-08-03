@@ -1,4 +1,5 @@
 import asyncio
+import os
 from pathlib import Path
 
 from graia.ariadne.app import Ariadne
@@ -38,7 +39,7 @@ async def keywords_reply(app: Ariadne, group: Group, message: MessageChain):
                     await app.send_group_message(group, re_chain)
                     break
                 elif reply_c[2]:  # 不相等且精准匹配
-                    break
+                    pass
                 else:  # 不相等，模糊匹配
                     await app.send_group_message(group, re_chain)
                     break
@@ -65,13 +66,14 @@ async def ero(app: Ariadne, group: Group, message: MessageChain, member: Member)
                 await app.send_group_message(group, MessageChain(['正在处理中。。。']))
                 msg_str = ret_msg.as_persistent_string()
                 file_dir = msg_str_to_file(msg_str)
-                if not run_sql(f"select * from keywords_reply where keywords='{reply_key}'"):  # 如果该关键词没有记录
+                if not run_sql(
+                        f"select * from keywords_reply where keywords='{reply_key}' and `group`={group.id}"):  # 如果该关键词没有记录
                     run_sql(f"insert into keywords_reply values ('{reply_key}',{group.id},1,'{file_dir}')")
                     await app.send_group_message(group, MessageChain('处理完成，记录已添加'))
                     fresh_cache()
                 else:
                     run_sql(
-                        f"update keywords_reply set chain_file_dir='{file_dir}'where `group` = {group.id} and keywords={reply_key})")
+                        f"update keywords_reply set chain_file_dir='{file_dir}' where `group` = {group.id} and keywords='{reply_key}'")
                     await app.send_group_message(group, MessageChain('该关键词存在记录，已覆盖'))
         else:
             await app.send_group_message(group, MessageChain(f"添加回复词操作需要管理员权限"))
@@ -96,7 +98,7 @@ async def ero(app: Ariadne, group: Group, message: MessageChain, member: Member)
                     fresh_cache()
                 else:
                     run_sql(
-                        f"update keywords_reply set chain_file_dir='{file_dir}'where `group` = 0 and keywords={reply_key})")
+                        f"update keywords_reply set chain_file_dir='{file_dir}'where `group` = 0 and keywords='{reply_key}')")
                     await app.send_group_message(group, MessageChain('该全局回复词存在记录，已覆盖'))
         else:
             await app.send_group_message(group, MessageChain(f"全局配置需要超管权限，卡BUG呢"))

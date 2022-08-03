@@ -1,3 +1,4 @@
+import path
 import hashlib
 import os
 
@@ -45,8 +46,7 @@ def get_md5_value(context):
 
 def msg_str_to_file(message_str: str):
     md5 = get_md5_value(message_str)
-    print(os.getcwd())
-    file_data = open(f"data\\message_str\\{md5}.txt", "w+")
+    file_data = open(f"data/message_str/{md5}.txt", "w+")
     file_data.write(message_str)
     file_data.close()
-    return f"data\\\message_str\\\{md5}.txt"
+    return f"data/message_str/{md5}.txt"
