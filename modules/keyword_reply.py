@@ -32,7 +32,7 @@ MessageChain(At(666), Image(data_bytes=Path("data", "imgs", "graiax.png").read_b
 async def keywords_reply(app: Ariadne, group: Group, message: MessageChain):
     for word in Gvb.KeyWordsList:  # 遍历每个关键词
         if word in message:  # 关键词命中消息
-            reply_c = run_sql(f"select * from keywords_reply where keywords = '{word}'order by `group`")  # 获取关键词回复配置
+            reply_c = run_sql(f"select * from keywords_reply where keywords = '{word}'order by `group` LIMIT 1")  # 获取关键词回复配置
             re_chain = MessageChain.from_persistent_string(open(reply_c[3], 'r').read())
             if reply_c[1] == group.id or reply_c[1] == 0:  # 在作用群内
                 if message.display == word:  # 消息等于关键词，直接发送
@@ -98,7 +98,7 @@ async def ero(app: Ariadne, group: Group, message: MessageChain, member: Member)
                     fresh_cache()
                 else:
                     run_sql(
-                        f"update keywords_reply set chain_file_dir='{file_dir}'where `group` = 0 and keywords='{reply_key}')")
+                        f"update keywords_reply set chain_file_dir='{file_dir}'where `group` = 0 and keywords='{reply_key}'")
                     await app.send_group_message(group, MessageChain('该全局回复词存在记录，已覆盖'))
         else:
             await app.send_group_message(group, MessageChain(f"全局配置需要超管权限，卡BUG呢"))
